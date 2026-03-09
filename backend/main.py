@@ -1,4 +1,5 @@
 import json
+from io import BytesIO
 from fastapi import FastAPI, UploadFile, File, Form
 import polars as pl
 
@@ -27,7 +28,7 @@ async def analisar(
 
     content = await file.read()
 
-    df = pl.read_csv(content)
+    df = pl.read_csv(BytesIO(content))
 
     df = apply_data_mapping(df, mapping)
 
