@@ -45,8 +45,8 @@ def analisar_dados(df: pl.DataFrame) -> dict:
     dias_secos = np.sum(df["precipitacao_mm"].to_numpy() == 0)
 
     return {
-        "total": float(total),
-        "media": float(media),
+        "total_precipitacao": float(total),
+        "media_precipitacao": float(media),
         "desvio_padrao": float(desvio),
         "dias_secos": int(dias_secos)
     }

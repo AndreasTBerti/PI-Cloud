@@ -9,7 +9,7 @@ def main() -> None:
 class Frontend():
 
     def __init__(self):
-        self.API_URL = "https://pi-cloud.onrender.com/analisar"
+        self.API_URL = "https://pi-cloud.onrender.com/analyze"
         
         st.title("DataViewer")
 
@@ -48,7 +48,7 @@ class Frontend():
         if st.button("Analisar dados"):
 
             files = {
-                "file": file.getvalue()
+                "file": (file.name, file.getvalue(), "text/csv")
             }
 
             data = {
