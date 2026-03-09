@@ -47,7 +47,7 @@ def analisar_dados(df: pl.DataFrame) -> dict:
     return {
         "total_precipitacao": float(total),
         "media_precipitacao": float(media),
-        "desvio_padrao": float(desvio),
+        "desvio_padrao_precipitacao": float(desvio),
         "dias_secos": int(dias_secos)
     }
 

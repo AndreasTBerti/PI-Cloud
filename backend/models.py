@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 class RainStats(BaseModel):
-    total: float
-    media: float
-    desvio_padrao: float
+    total_precipitacao: float
+    media_precipitacao: float
+    desvio_padrao_precipitacao: float
     dias_secos: int
 
 
