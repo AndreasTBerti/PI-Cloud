@@ -23,9 +23,9 @@ def apply_data_mapping(df: pl.DataFrame, mapping: dict) -> pl.DataFrame:
 
 def analisar_dados(df: pl.DataFrame) -> dict:
 
-    #primeiro filtro - retirar caracteres
+    #primeiro filtro - retirar caracteres indesejados
     df = df.with_columns(
-        pl.all().str.strip_chars()
+        pl.col(pl.String).str.strip_chars()
     )
 
     #segundo filtro - data
