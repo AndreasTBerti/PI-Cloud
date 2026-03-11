@@ -31,7 +31,6 @@ class Frontend():
         if file:
             self.data_mapping(file)
 
-
     #função de mapping
     def data_mapping(self, file) -> None:
 
@@ -109,31 +108,13 @@ class Frontend():
 
                     result = response.json()
 
-                    stats = result["estatisticas"]
+                    precipitacao_stats = result["precipitacao"]
+                    temperatura_stats = result["temperatura"]
 
                     st.subheader("Resultados da análise")
 
-                    c1, c2, c3, c4 = st.columns(4)
-
-                    c1.metric(
-                        "🌧 Total precipitação",
-                        f"{stats['total_precipitacao']:.2f} mm"
-                    )
-
-                    c2.metric(
-                        "📊 Média precipitação",
-                        f"{stats['media_precipitacao']:.2f} mm"
-                    )
-
-                    c3.metric(
-                        "📉 Desvio padrão precipitação",
-                        f"{stats['desvio_padrao_precipitacao']:.2f}"
-                    )
-
-                    c4.metric(
-                        "☀ Dias secos",
-                        stats["dias_secos"]
-                    )
+                    self.exibir_dados_precipitacao(stats=precipitacao_stats)
+                    self.exibir_dados_temperatura(stats=temperatura_stats)
 
                 #senão, apontar erro
                 else:
@@ -143,6 +124,59 @@ class Frontend():
 
             except Exception as e:
                 st.error(str(e))
+
+    #função para exibir dados de precipitação
+    def exibir_dados_precipitacao(self, stats):
+        c1, c2, c3, c4 = st.columns(4)
+
+        c1.metric(
+            "🌧 Total precipitação",
+            f"{stats['total_precipitacao']:.2f} mm"
+        )
+
+        c2.metric(
+            "📊 Média precipitação",
+            f"{stats['media_precipitacao']:.2f} mm"
+        )
+
+        c3.metric(
+            "📉 Desvio padrão precipitação",
+            f"{stats['desvio_padrao_precipitacao']:.2f}"
+        )
+
+        c4.metric(
+            "☀ Dias secos",
+            stats["dias_secos"]
+        )
+
+    #função para exibir dados de temperatura
+    def exibir_dados_temperatura(self, stats):
+        c1, c2, c3, c4, c5 = st.columns(5)
+
+        c1.metric(
+            "🌧 Total temperatura",
+            f"{stats['total_temperatura']:.2f} °C"
+        )
+
+        c2.metric(
+            "📊 Média temperatura",
+            f"{stats['media_temperatura']:.2f} °C"
+        )
+
+        c3.metric(
+            "📉 Desvio padrão temperatura",
+            f"{stats['desvio_padrao_temperatura']:.2f}"
+        )
+
+        c4.metric(
+            "Temperatura Mínima",
+            stats["temperatura_minima"]
+        )
+
+        c5.metric(
+            "Temperatura Máxima",
+            stats["temperatura_maxima"]
+        )
 
 if __name__ == "__main__":
     main()

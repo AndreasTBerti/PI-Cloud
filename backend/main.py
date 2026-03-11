@@ -3,8 +3,8 @@ from io import BytesIO
 from fastapi import FastAPI, UploadFile, File, Form
 import polars as pl
 
-from models import RainStats, AnalysisResponse
-from processing import analisar_dados, apply_data_mapping
+from models import RainStats, TemperatureStats, AnalysisResponse
+from processing import analisar_dados_precipitacao, analisar_dados_temperatura, apply_data_mapping
 
 app = FastAPI(
     title="DataViewer API",
@@ -32,9 +32,11 @@ async def analisar(
 
     df = apply_data_mapping(df, mapping)
 
-    stats = analisar_dados(df)
+    precipitacao_stats = analisar_dados_precipitacao(df)
+    temperatura_stats = analisar_dados_temperatura(df)
 
     return AnalysisResponse(
         sucesso=True,
-        estatisticas=RainStats(**stats)
+        precipitacao=RainStats(**precipitacao_stats),
+        temperatura=TemperatureStats(**temperatura_stats)
     )

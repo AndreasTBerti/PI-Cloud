@@ -6,7 +6,14 @@ class RainStats(BaseModel):
     desvio_padrao_precipitacao: float
     dias_secos: int
 
+class TemperatureStats(BaseModel):
+    total_temperatura: float
+    media_temperatura: float
+    desvio_padrao_temperatura: float
+    temperatura_minima: float
+    temperatura_maxima: float
 
 class AnalysisResponse(BaseModel):
     sucesso: bool
-    estatisticas: RainStats
+    precipitacao: RainStats
+    temperatura: TemperatureStats

@@ -18,11 +18,6 @@ def apply_data_mapping(df: pl.DataFrame, mapping: dict) -> pl.DataFrame:
 
     df = df.rename(rename_dict)
 
-    return df
-
-
-def analisar_dados(df: pl.DataFrame) -> dict:
-
     #primeiro filtro - retirar caracteres indesejados
     df = df.with_columns(
         pl.col(pl.String).str.strip_chars()
@@ -38,10 +33,14 @@ def analisar_dados(df: pl.DataFrame) -> dict:
         pl.col("precipitacao_mm").cast(pl.Float64)
     )
 
+    return df
+
+
+def analisar_dados_precipitacao(df: pl.DataFrame) -> dict:
+
     total_precipit = df["precipitacao_mm"].sum()
     media_precipit = df["precipitacao_mm"].mean()
     desvio_precipit = df["precipitacao_mm"].std()
-
     dias_secos = np.sum(df["precipitacao_mm"].to_numpy() == 0)
 
     return {
@@ -50,6 +49,24 @@ def analisar_dados(df: pl.DataFrame) -> dict:
         "desvio_padrao_precipitacao": float(desvio_precipit),
         "dias_secos": int(dias_secos)
     }
+
+
+def analisar_dados_temperatura(df: pl.DataFrame) -> dict:
+    total_temp = df["temperatura"].sum()
+    media_temp = df["temperatura"].mean()
+    desvio_temp = df["temperatura"].std()
+    min_temp = df["temperatura"].min()
+    max_temp = df["temperatura"].max()
+
+    return {
+        "total_temperatura": total_temp,
+        "media_temperatura": media_temp,
+        "desvio_padrao_temperatura": desvio_temp,
+        "temperatura_minima": min_temp,
+        "temperatura_maxima": max_temp
+    }
+
+
 
 if __name__ == "__main__":
     pass
