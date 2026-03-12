@@ -50,7 +50,7 @@ class Frontend():
             "Ignorar",
             "Data",
             "Precipitação",
-            "Temperatura",
+            "Temperatura Média",
         ]
 
         #container para a seleção dos dados para o mapping
@@ -114,7 +114,7 @@ class Frontend():
                     st.subheader("Resultados da análise")
 
                     self.exibir_dados_precipitacao(stats=precipitacao_stats)
-                    self.exibir_dados_temperatura(stats=temperatura_stats)
+                    self.exibir_dados_temperatura_média(stats=temperatura_stats)
 
                 #senão, apontar erro
                 else:
@@ -150,33 +150,29 @@ class Frontend():
         )
 
     #função para exibir dados de temperatura
-    def exibir_dados_temperatura(self, stats):
-        c1, c2, c3, c4, c5 = st.columns(5)
+    def exibir_dados_temperatura_média(self, stats):
+        c1, c2, c3, c4= st.columns(5)
 
         c1.metric(
-            "🌧 Total temperatura",
-            f"{stats['total_temperatura']:.2f} °C"
-        )
-
-        c2.metric(
-            "📊 Média temperatura",
-            f"{stats['media_temperatura']:.2f} °C"
-        )
-
-        c3.metric(
-            "📉 Desvio padrão temperatura",
-            f"{stats['desvio_padrao_temperatura']:.2f}"
-        )
-
-        c4.metric(
             "Temperatura Mínima",
             stats["temperatura_minima"]
         )
 
-        c5.metric(
+        c2.metric(
             "Temperatura Máxima",
             stats["temperatura_maxima"]
         )
+
+        c3.metric(
+            "📊 Média temperatura",
+            f"{stats['media_temperatura']:.2f} °C"
+        )
+
+        c4.metric(
+            "📉 Desvio padrão temperatura",
+            f"{stats['desvio_padrao_temperatura']:.2f}"
+        )
+
 
 if __name__ == "__main__":
     main()

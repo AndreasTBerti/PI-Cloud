@@ -13,7 +13,7 @@ def apply_data_mapping(df: pl.DataFrame, mapping: dict) -> pl.DataFrame:
         elif meaning == "Precipitação":
             rename_dict[original] = "precipitacao_mm"
 
-        elif meaning == "Temperatura":
+        elif meaning == "Temperatura Média":
             rename_dict[original] = "temperatura"
 
     df = df.rename(rename_dict)
