@@ -151,7 +151,7 @@ class Frontend():
 
     #função para exibir dados de temperatura
     def exibir_dados_temperatura_média(self, stats):
-        c1, c2, c3, c4= st.columns(5)
+        c1, c2, c3, c4= st.columns(4)
 
         c1.metric(
             "Temperatura Mínima",

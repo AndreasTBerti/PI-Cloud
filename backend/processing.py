@@ -18,6 +18,12 @@ def apply_data_mapping(df: pl.DataFrame, mapping: dict) -> pl.DataFrame:
 
     df = df.rename(rename_dict)
 
+    df = filter_data_frame(df)
+
+    return df
+
+
+def filter_data_frame(df: pl.DataFrame) -> pl.DataFrame:
     #primeiro filtro - retirar caracteres indesejados
     df = df.with_columns(
         pl.col(pl.String).str.strip_chars()
@@ -52,14 +58,12 @@ def analisar_dados_precipitacao(df: pl.DataFrame) -> dict:
 
 
 def analisar_dados_temperatura(df: pl.DataFrame) -> dict:
-    total_temp = df["temperatura"].sum()
     media_temp = df["temperatura"].mean()
     desvio_temp = df["temperatura"].std()
     min_temp = df["temperatura"].min()
     max_temp = df["temperatura"].max()
 
     return {
-        "total_temperatura": total_temp,
         "media_temperatura": media_temp,
         "desvio_padrao_temperatura": desvio_temp,
         "temperatura_minima": min_temp,
