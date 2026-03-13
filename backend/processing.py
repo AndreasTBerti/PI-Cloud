@@ -92,9 +92,9 @@ def analisar_por_mes(df: pl.DataFrame) -> list:
         return []
 
     resultado = (
-        df.group_by("mes")
+        df.group_by("data")
         .agg(aggs)
-        .sort("mes")
+        .sort("data")
     )
 
     return resultado.to_dicts()
