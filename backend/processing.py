@@ -70,18 +70,13 @@ def analisar_dados_temperatura(df: pl.DataFrame) -> dict:
 
 def analisar_por_mes(df: pl.DataFrame) -> list:
 
-    df.group_by_dynamic(
-        "data",
-        every="1mo"
-    )
-
     aggs: list = []
 
-    if "precipitacao" in df.columns:
-        aggs.append(
+    if "precipitacao_mm" in df.columns:
+        aggs.extend([
             pl.col("precipitacao_mm").sum().alias("total_precipitacao"),
             pl.col("precipitacao_mm").mean().alias("media_precipitacao")
-        )
+        ])
 
     if "temperatura" in df.columns:
         aggs.append(
@@ -92,7 +87,10 @@ def analisar_por_mes(df: pl.DataFrame) -> list:
         return []
 
     resultado = (
-        df.group_by("data")
+        df.group_by_dynamic(
+            "data",
+            every="1mo"
+        )
         .agg(aggs)
         .sort("data")
     )
