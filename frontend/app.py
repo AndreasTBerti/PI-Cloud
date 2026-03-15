@@ -133,6 +133,7 @@ class Frontend():
         precipitacao_stats = result["precipitacao"]
         temperatura_stats = result["temperatura"]
         dados_mensais = result["dados_mensais"]
+        dados_diarios = result['dados_diarios']
 
         st.subheader("Resultados da análise")
 
@@ -144,6 +145,9 @@ class Frontend():
 
         if dados_mensais:
             self.exibir_dados_por_mes(stats=dados_mensais)
+
+        if dados_diarios:
+            self.exibir_grafico_dados_diarios(stats=dados_diarios)
 
     #função para exibir dados de precipitação
     def exibir_dados_precipitacao(self, stats):
@@ -199,13 +203,15 @@ class Frontend():
         
         st.subheader("Dados Médios por Mês")
 
-        st.dataframe(df_mensal)
+        st.dataframe(df_mensal, row_height=2)
 
     #função que exibe gráfico com dados diários
     def exibir_grafico_dados_diarios(self, stats):
         dados_diarios = pl.DataFrame(stats)
         df = dados_diarios.to_pandas()
         df['data'] = pl.datetime(df['data'])
+
+        st.subheader("Exibição de Dados Diários de Temperatura e Precipitação")
         
         fig = make_subplots(specs=[[{"secondary_y": True}]])
 
