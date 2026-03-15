@@ -3,6 +3,9 @@ import polars as pl
 from requests import post
 import streamlit as st
 
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+
 #função main do programa
 def main() -> None:
     Frontend()
@@ -193,10 +196,36 @@ class Frontend():
     #função que exibe gráfico com dados mensais
     def exibir_dados_por_mes(self, stats):
         df_mensal = pl.DataFrame(stats)
+        plot = df_mensal.to_pandas()
         
         st.subheader("Dados Mensais")
 
-        st.dataframe(df_mensal)
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Bar(
+                x=plot["data"],
+                y=plot["total_precipitacao"],
+                name="Precipitação (mm)"
+            ),
+            secondary_y=False
+        )
+
+        fig.add_trace(
+            go.Scatter(
+                x=plot["data"],
+                y=plot["media_temperatura"],
+                mode="lines+markers",
+                name="Temperatura média (°C)"
+            ),
+            secondary_y=True
+        )
+
+        fig.update_layout(
+            title="Clima mensal",
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
 
 
 if __name__ == "__main__":
