@@ -94,7 +94,11 @@ def analisar_por_mes(df: pl.DataFrame) -> list:
             every="1mo"
         )
         .agg(aggs)
-        .sort("data")
+        .with_columns(
+            pl.col("data").dt.strftime("%Y-%m").alias("mes")
+        )
+        .drop("data")
+        .sort("mes")
     )
 
     return resultado.to_dicts()
