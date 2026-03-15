@@ -193,40 +193,54 @@ class Frontend():
             f"{stats['desvio_padrao_temperatura']:.2f}"
         )
 
-    #função que exibe gráfico com dados mensais
+    #função que exibe tabela com dados mensais
     def exibir_dados_por_mes(self, stats):
         df_mensal = pl.DataFrame(stats)
-        plot = df_mensal.to_pandas()
         
-        st.subheader("Dados Mensais")
+        st.subheader("Dados Médios por Mês")
 
+        st.dataframe(df_mensal)
+
+    #função que exibe gráfico com dados diários
+    def exibir_grafico_dados_diarios(self, stats):
+        dados_diarios = pl.DataFrame(stats)
+        df = dados_diarios.to_pandas()
+        df['data'] = pl.datetime(df['data'])
+        
         fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-        fig.add_trace(
-            go.Bar(
-                x=plot["data"],
-                y=plot["total_precipitacao"],
-                name="Precipitação (mm)"
-            ),
-            secondary_y=False
-        )
+        # precipitação
+        if "precipitacao" in df.columns:
+            fig.add_trace(
+                go.Bar(
+                    x=df["data"],
+                    y=df["precipitacao"],
+                    name="Precipitação (mm)"
+                ),
+                secondary_y=False
+            )
 
-        fig.add_trace(
-            go.Scatter(
-                x=plot["data"],
-                y=plot["media_temperatura"],
-                mode="lines+markers",
-                name="Temperatura média (°C)"
-            ),
-            secondary_y=True
-        )
+        # temperatura
+        if "temperatura_media" in df.columns:
+            fig.add_trace(
+                go.Scatter(
+                    x=df["data"],
+                    y=df["temperatura_media"],
+                    mode="lines+markers",
+                    name="Temperatura média (°C)"
+                ),
+                secondary_y=True
+            )
 
         fig.update_layout(
-            title="Clima mensal",
+            title="Clima diário",
+            template="plotly_dark"
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        fig.update_yaxes(title_text="Precipitação (mm)", secondary_y=False)
+        fig.update_yaxes(title_text="Temperatura (°C)", secondary_y=True)
 
+        st.plotly_chart(fig, use_container_width=True)
 
 
 if __name__ == "__main__":
