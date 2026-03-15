@@ -86,12 +86,13 @@ def analisar_por_mes(df: pl.DataFrame) -> list:
     if not aggs:
         return []
 
-    df = df.with_columns(
-        pl.col("data").dt.strftime("%Y-%m").alias("mes")
-    )
+    df = df.sort("data")
 
     resultado = (
-        df.group_by("mes")
+        df.group_by_dynamic(
+            index_column="data",
+            every="1mo"
+        )
         .agg(aggs)
         .sort("data")
     )
