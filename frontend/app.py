@@ -183,19 +183,20 @@ class Frontend():
         )
 
         c2.metric(
-            "Temperatura Máxima",
-            stats["temperatura_maxima"]
-        )
-
-        c3.metric(
             "📊 Média temperatura",
             f"{stats['media_temperatura']:.2f} °C"
         )
 
-        c4.metric(
+        c3.metric(
             "📉 Desvio padrão temperatura",
             f"{stats['desvio_padrao_temperatura']:.2f}"
         )
+
+        c4.metric(
+            "Temperatura Máxima",
+            stats["temperatura_maxima"]
+        )
+
 
     #função que exibe tabela com dados mensais
     def exibir_dados_por_mes(self, stats):
