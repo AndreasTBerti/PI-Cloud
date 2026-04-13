@@ -1,6 +1,9 @@
+dotenv
 fastapi
-uvicorn
-polars
 numpy
+os
+polars
 python-multipart
 pydantic
+supabase
+uvicorn
