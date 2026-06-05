@@ -1,4 +1,0 @@
-plotly
-polars
-requests
-streamlit

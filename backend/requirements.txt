@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-polars
-numpy
-python-multipart
-pydantic
