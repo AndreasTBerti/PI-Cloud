@@ -1,7 +1,6 @@
 dotenv
 fastapi
 numpy
-os
 polars
 python-multipart
 pydantic

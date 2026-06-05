@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from Pipeline.pipeline import run_pipeline
 
-from Models.model import ClimateData
+from backend.Database.database import save_data
+from backend.Models.model import ClimateData
 
 app = FastAPI(
     title="DataViewer API",
@@ -14,7 +14,8 @@ def root() -> dict:
     return {"status": "API online"}
 
 
-@app.post("/upload")
+@app.post("/sensor")
 def upload_climate_data(file: ClimateData):
     # data validation
-    run_pipeline(file=file)
+    save_data(data=file)
+    return {"responde": "200"}
